@@ -232,6 +232,11 @@ class APIRequestor(object):
                 rbody, rcode)
         if not (200 <= rcode < 300):
             self.handle_api_error(rbody, rcode, resp)
+        if resp is None:
+            raise error.APIError(
+                "Invalid response body from API: %s "
+                "(HTTP response body was %d)" % (rbody, rcode),
+            )
         return resp
 
     # Deprecated request handling.  Will all be removed in 2.0
